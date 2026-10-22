@@ -1,4 +1,5 @@
 "use client";
+import { Money } from "@/lib/context/CurrencyContext";
 
 import axios, { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
@@ -258,7 +259,7 @@ const AddOrderForm = () => {
                       value={product._id}
                       className="font-mono text-xs hover:bg-gray-100"
                     >
-                      {product.name} - ${product.sellPrice} (Stock: {product.quantity})
+                      {product.name} - <Money value={product.sellPrice} /> (Stock: {product.quantity})
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -343,13 +344,13 @@ const AddOrderForm = () => {
                         {item.name}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-mono">
-                        ${item.price.toFixed(2)}
+                        <Money value={item.price} />
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-mono">
                         {item.quantity}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-mono">
-                        ${(item.price * item.quantity).toFixed(2)}
+                        <Money value={(item.price * item.quantity)} />
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                         <Button
@@ -383,7 +384,7 @@ const AddOrderForm = () => {
             <div className="bg-gray-50 p-4 rounded-lg">
               <h3 className="text-lg font-semibold text-gray-800 font-mono">
                 Total Amount:{" "}
-                <span className="text-blue-600">${totalAmount.toFixed(2)}</span>
+                <span className="text-blue-600"><Money value={totalAmount} /></span>
               </h3>
             </div>
           </CardContent>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Money } from "@/lib/context/CurrencyContext";
 import Image from "next/image";
 import { Skeleton } from "@/components/ui/skeleton";
 import { base64ToObjectUrl } from "@/lib/image-utils";
@@ -38,7 +39,8 @@ const ProductCard = ({
   const highlightText = (text: string) => {
     if (!searchQuery || !text) return text;
 
-    const regex = new RegExp(`(${searchQuery})`, "gi");
+    const escaped = searchQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(`(${escaped})`, "gi");
     const parts = text.split(regex);
 
     return parts.map((part, index) =>
@@ -171,10 +173,10 @@ const ProductCard = ({
             <div className="flex justify-between items-start">
               <div>
                 <p className="text-lg font-bold text-gray-900">
-                  ${product.sellPrice.toFixed(2)}
+                  <Money value={product.sellPrice} />
                 </p>
                 <p className="text-xs text-gray-500">
-                  Cost: ${product.costPrice.toFixed(2)}
+                  Cost: <Money value={product.costPrice} />
                 </p>
               </div>
               <div className="text-right">

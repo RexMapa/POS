@@ -1,4 +1,5 @@
 "use client";
+import { CurrencyCode } from "@/lib/context/CurrencyContext";
 
 import React, { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
@@ -447,7 +448,7 @@ export function AddProductForm({ onSubmit, onCancel }: AddProductFormProps) {
                   htmlFor="costPrice"
                   className="font-mono text-xs font-medium text-black"
                 >
-                  Cost Price ($)
+                  Cost Price (<CurrencyCode />)
                 </Label>
                 <Input
                   id="costPrice"
@@ -471,7 +472,7 @@ export function AddProductForm({ onSubmit, onCancel }: AddProductFormProps) {
                   htmlFor="sellPrice"
                   className="font-mono text-xs font-medium text-black"
                 >
-                  Sell Price ($)
+                  Sell Price (<CurrencyCode />)
                 </Label>
                 <Input
                   id="sellPrice"

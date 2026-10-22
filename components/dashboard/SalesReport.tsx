@@ -1,4 +1,5 @@
 "use client";
+import { Money } from "@/lib/context/CurrencyContext";
 
 import { useState, useEffect, useCallback } from "react";
 import { Card, CardContent } from "@/components/ui/card";
@@ -144,7 +145,7 @@ export default function SalesReport({ dateRange }: SalesReportProps) {
             TOTAL REVENUE
           </div>
           <div className="text-2xl font-mono font-light text-white mt-1">
-            ${data.summary.totalRevenue.toLocaleString()}
+            <Money value={data.summary.totalRevenue} />
           </div>
         </div>
 
@@ -214,7 +215,7 @@ export default function SalesReport({ dateRange }: SalesReportProps) {
                     {new Date(day.date).toLocaleDateString()}
                   </td>
                   <td className="p-3 text-right font-mono font-light">
-                    ${day.totalRevenue.toLocaleString()}
+                    <Money value={day.totalRevenue} />
                   </td>
                   <td className="p-3 text-right font-mono font-light">
                     {day.orderCount}
@@ -250,7 +251,7 @@ export default function SalesReport({ dateRange }: SalesReportProps) {
 
                 <div className="font-light">Revenue</div>
                 <div className="font-mono font-light">
-                  ${day.totalRevenue.toLocaleString()}
+                  <Money value={day.totalRevenue} />
                 </div>
 
                 <div className="font-light">Orders</div>

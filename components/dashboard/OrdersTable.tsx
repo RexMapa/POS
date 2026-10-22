@@ -1,5 +1,6 @@
 // components/orders/OrdersTable.tsx
 "use client";
+import { useCurrency } from "@/lib/context/CurrencyContext";
 
 import {
   Table,
@@ -47,6 +48,7 @@ interface OrdersTableProps {
 }
 
 export default function OrdersTable({ orders }: OrdersTableProps) {
+  const {currency}=useCurrency();
   const router = useRouter();
 
   // Format date to be more readable
@@ -79,7 +81,7 @@ export default function OrdersTable({ orders }: OrdersTableProps) {
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
-      currency: "USD",
+      currency,
     }).format(amount);
   };
 

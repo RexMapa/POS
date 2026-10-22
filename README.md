@@ -1,17 +1,25 @@
-# Que Bros Perfumery · Boutique POS
+# Que Bros Perfumery — Neon POS
 
-A Que Bros redesign of the supplied Invenza inventory and order management application.
+A complete Next.js inventory and sales workspace designed for GitHub, Vercel hosting and Neon PostgreSQL. Start with [START-HERE.md](START-HERE.md).
 
-Start with [QUE-BROS-SETUP.md](QUE-BROS-SETUP.md) for local and Vercel setup, environment variables and the MongoDB build fix.
+- Cream, charcoal and gold Que Bros visual identity.
+- Products, images, stock, sales/orders, customers and reports.
+- PostgreSQL transactions prevent partial sales and negative stock.
+- Cancelling an order restores stock once; cancelled orders cannot be reopened.
+- PHP currency by default, with display currency controlled in Business Settings.
+- Automatic first-run table and owner-account creation.
+- No MongoDB connection or Mongoose dependency.
+- Optional email registration; the owner can sign in without email setup.
 
-## Checks
-- `npm run build` — production build (does not require MongoDB credentials).
-- `npm run lint` — source checks.
-- `npm run test:configuration` — database configuration regression checks.
-- `npx tsc --noEmit` — type checks.
+Required Vercel environment variables: `DATABASE_URL`, `JWT_SECRET`, `ADMIN_EMAIL`, `ADMIN_PASSWORD`.
 
-Desktop and mobile browser checks covered welcome/sign-in screens, invalid-email feedback, dashboard navigation, mobile menu, no page overflow, failed dashboard requests and retry. Dashboard previews use sample data. Live database reads/writes, verification email delivery and hosting deployment require your own service configuration and have not been tested here.
+```sh
+npm ci
+npm run dev
+```
 
-Next.js and its ESLint configuration were updated to 15.5.28, the patched 15.x release described at https://nextjs.org/blog/nextjs-security-update-october-14-2026 .
+Copy `.env.example` to `.env.local` for local use and enter your own values. `npm run lint`, `npm test`, and `npm run build` run the project checks. The SQL schema is also included in `database/schema.sql`.
 
-Original project: Invenza by Ahnaf Farhan Hossain. This update preserves its inventory, order, customer and report workflows. It does not add a payment terminal or connect the POS to the website's database automatically.
+The optional `.github/workflows/checks.yml` checks pushes and pull requests. Import the GitHub repository into Vercel for automatic deployments.
+
+Original inventory project: Invenza by Ahnaf Farhan Hossain. This edition replaces the MongoDB backend with PostgreSQL and retains the Que Bros boutique design.

@@ -1,50 +1,14 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
-import { jwtVerify } from "jose";
-
-export async function middleware(request: NextRequest) {
-  const token = request.cookies.get("token")?.value;
-  const configuredSecret = process.env.JWT_SECRET?.trim();
-  if (!configuredSecret) {
-    if (request.nextUrl.pathname.startsWith("/dashboard")) {
-      return NextResponse.redirect(new URL("/auth/signin", request.url));
-    }
-    return NextResponse.next();
-  }
-
-  // Handle "/" → auto-redirect if logged in
-  if (request.nextUrl.pathname === "/") {
-    if (token) {
-      try {
-        const secret = new TextEncoder().encode(configuredSecret);
-        await jwtVerify(token, secret);
-        // Valid token → go to dashboard
-        return NextResponse.redirect(new URL("/dashboard", request.url));
-      } catch {
-        // Invalid token → stay on "/"
-        return NextResponse.next();
-      }
-    }
-    return NextResponse.next(); // No token → stay on "/"
-  }
-
-  // Handle dashboard protection
-  if (request.nextUrl.pathname.startsWith("/dashboard")) {
-    if (!token) {
-      return NextResponse.redirect(new URL("/auth/signin", request.url));
-    }
-    try {
-      const secret = new TextEncoder().encode(configuredSecret);
-      await jwtVerify(token, secret);
-      return NextResponse.next();
-    } catch {
-      return NextResponse.redirect(new URL("/auth/signin", request.url));
-    }
-  }
-
-  return NextResponse.next();
+import { NextResponse, type NextRequest } from 'next/server';
+import { jwtVerify } from 'jose';
+export async function middleware(req:NextRequest) {
+ const token=req.cookies.get('token')?.value;
+ const secret=process.env.JWT_SECRET?.trim();
+ let valid=false;
+ if(token && secret && secret.length>=32) {
+  try { const {payload}=await jwtVerify(token,new TextEncoder().encode(secret),{algorithms:['HS256'],issuer:'que-bros-pos',audience:'que-bros-workspace'}); valid=typeof payload.id==='string' && !!payload.id; } catch {}
+ }
+ if(req.nextUrl.pathname.startsWith('/dashboard') && !valid) return NextResponse.redirect(new URL('/auth/signin',req.url));
+ if(req.nextUrl.pathname==='/' && valid) return NextResponse.redirect(new URL('/dashboard',req.url));
+ return NextResponse.next();
 }
-
-export const config = {
-  matcher: ["/", "/dashboard/:path*"],
-};
+export const config={matcher:['/','/dashboard/:path*']};

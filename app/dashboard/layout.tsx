@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 import { BoutiqueNav } from "@/components/dashboard/BoutiqueNav";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { CurrencyProvider } from "@/lib/context/CurrencyContext";
 
 export default function DashboardLayout({
   children,
@@ -47,7 +48,7 @@ export default function DashboardLayout({
   };
 
   return (
-    <SearchProvider>
+    <SearchProvider><CurrencyProvider>
       <div className="flex min-h-screen">
         <BoutiqueNav />
         <DashboardSidebar
@@ -66,6 +67,6 @@ export default function DashboardLayout({
             {children}</main>
         </div>
       </div>
-    </SearchProvider>
+    </CurrencyProvider></SearchProvider>
   );
 }

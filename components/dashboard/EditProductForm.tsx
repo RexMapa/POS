@@ -1,4 +1,5 @@
 "use client";
+import { CurrencyCode } from "@/lib/context/CurrencyContext";
 
 import React, { useState, useRef, useCallback, memo } from "react";
 import { useRouter } from "next/navigation";
@@ -379,7 +380,7 @@ const InventoryPricingSection = memo(
         <div className="grid gap-4 md:grid-cols-2">
           <div className="space-y-2">
             <Label className="font-mono text-xs font-medium text-black">
-              Cost Price ($)
+              Cost Price (<CurrencyCode />)
             </Label>
             <Input
               type="number"
@@ -400,7 +401,7 @@ const InventoryPricingSection = memo(
 
           <div className="space-y-2">
             <Label className="font-mono text-xs font-medium text-black">
-              Sell Price ($)
+              Sell Price (<CurrencyCode />)
             </Label>
             <Input
               type="number"
@@ -455,7 +456,7 @@ export function EditProductForm({
         }
 
         try {
-          await axios.put(`/api/products/${product._id}`, data);
+          await axios.patch(`/api/products/${product._id}`, data);
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
           if (err.response?.status === 401) {

@@ -7,7 +7,24 @@ export function fileToBase64(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result as string);
+    reader.onload = () => {
+      const image = new Image();
+      image.onload = () => {
+        const scale = Math.min(1, 1400 / Math.max(image.width, image.height));
+        const canvas = document.createElement('canvas');
+        canvas.width = Math.max(1, Math.round(image.width * scale));
+        canvas.height = Math.max(1, Math.round(image.height * scale));
+        const context = canvas.getContext('2d');
+        if (!context) { reject(new Error('Unable to prepare image')); return; }
+        context.drawImage(image, 0, 0, canvas.width, canvas.height);
+        let data = canvas.toDataURL('image/webp', 0.82);
+        if (data.length > 1900000) data = canvas.toDataURL('image/webp', 0.6);
+        if (data.length > 2000000) reject(new Error('This image is too large. Try a smaller image.'));
+        else resolve(data);
+      };
+      image.onerror = () => reject(new Error('Unable to read image'));
+      image.src = reader.result as string;
+    };
     reader.onerror = (error) => reject(error);
   });
 }

@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function RegisterPage() {
+  if (process.env.REGISTRATION_ENABLED !== 'true') return <main className="min-h-screen flex items-center justify-center p-6"><div className="max-w-md text-center"><h1 className="text-4xl mb-4">Your boutique workspace.</h1><p className="text-muted-foreground mb-8">Sign in with the owner account configured for this boutique.</p><Link href="/auth/signin" className="inline-flex rounded-full bg-[#1e1e1e] text-[#fff7ef] px-8 py-3">Sign in</Link></div></main>;
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-50 p-4">
       <div className="w-full max-w-md">

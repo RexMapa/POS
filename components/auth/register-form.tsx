@@ -34,8 +34,8 @@ export default function RegisterForm() {
         break;
       case "password":
         if (!value) error = "Password is required.";
-        else if (value.length < 8)
-          error = "Password must be at least 8 characters.";
+        else if (value.length < 12)
+          error = "Password must be at least 12 characters.";
         break;
     }
     return error;
@@ -80,7 +80,7 @@ export default function RegisterForm() {
       toast.success(response.data.message);
       router.push(`/verification-sent?email=${formData.email}`);
     } catch (error: unknown) {
-      toast.error((error as Error).message || "Registration failed");
+      toast.error(axios.isAxiosError(error) ? error.response?.data?.message || "Registration failed" : "Registration failed");
     } finally {
       setIsSubmitting(false);
     }

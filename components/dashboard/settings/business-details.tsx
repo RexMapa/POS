@@ -61,6 +61,7 @@ export default function BusinessSection() {
       });
 
       if (response.ok) {
+        window.dispatchEvent(new Event('qb-currency-changed'));
         setIsEditing(false);
         fetchBusinessData(); // Refresh data
       }
@@ -243,7 +244,7 @@ export default function BusinessSection() {
                   Currency
                 </Label>
                 <Select
-                  value={formData.currency || "USD"}
+                  value={formData.currency || "PHP"}
                   onValueChange={(value) =>
                     setFormData({ ...formData, currency: value })
                   }
@@ -252,6 +253,7 @@ export default function BusinessSection() {
                     <SelectValue placeholder="Select currency" />
                   </SelectTrigger>
                   <SelectContent>
+                    <SelectItem value="PHP">PHP (₱)</SelectItem>
                     <SelectItem value="USD">USD ($)</SelectItem>
                     <SelectItem value="EUR">EUR (€)</SelectItem>
                     <SelectItem value="GBP">GBP (£)</SelectItem>

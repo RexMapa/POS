@@ -1,4 +1,5 @@
 "use client";
+import { Money } from "@/lib/context/CurrencyContext";
 
 import { useState, useEffect } from "react";
 import { SummaryCard } from "@/components/dashboard/SummaryCard";
@@ -8,6 +9,7 @@ import { SummaryCardSkeleton } from "@/components/dashboard/SummaryCardSkeleton"
 import { RecentOrdersTableSkeleton } from "@/components/dashboard/RecentOrdersTableSkeleton";
 import { LowStockProductsSkeleton } from "@/components/dashboard/LowStockProductsSkeleton";
 import { ShoppingCart, Package, Users, TrendingUp, Clock } from "lucide-react";
+import { useCurrency } from "@/lib/context/CurrencyContext";
 
 interface DashboardStats {
   totalOrders: number;
@@ -32,6 +34,7 @@ interface DashboardStats {
 }
 
 export default function DashboardPage() {
+  const {formatMoney}=useCurrency();
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState("");
@@ -99,7 +102,7 @@ export default function DashboardPage() {
       <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
         <SummaryCard
           title="Total Revenue"
-          value={`$${stats.totalRevenue.toFixed(2)}`}
+          value={formatMoney(stats.totalRevenue)}
           icon={<TrendingUp className="w-4 h-4" />}
           description="All time revenue"
           className="border border-gray-200 bg-gradient-to-br from-[#1E1E1E] via-[#29251e] to-[#40331e] rounded-md text-white xl:col-span-1"
@@ -156,7 +159,7 @@ export default function DashboardPage() {
                 Today&apos;s Revenue
               </p>
               <p className="text-lg sm:text-xl font-light text-gray-800 font-mono mt-0.5 sm:mt-1">
-                ${stats.todayRevenue.toFixed(2)}
+                <Money value={stats.todayRevenue} />
               </p>
             </div>
           </div>

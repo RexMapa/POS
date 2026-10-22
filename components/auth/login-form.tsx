@@ -57,10 +57,12 @@ export default function LoginForm() {
     setIsSubmitting(true);
     try {
       const response = await axios.post("/api/auth/signin", formData);
+      localStorage.setItem('userEmail', response.data.user.email);
+      localStorage.setItem('userName', response.data.user.name);
       toast.success(response.data.message);
       router.push("/dashboard");
     } catch (error: unknown) {
-      toast.error((error as Error).message || "Sign-in failed");
+      toast.error(axios.isAxiosError(error) ? error.response?.data?.message || "Sign-in failed" : "Sign-in failed");
     } finally {
       setIsSubmitting(false);
     }

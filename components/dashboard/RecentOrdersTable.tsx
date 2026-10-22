@@ -1,4 +1,5 @@
 "use client";
+import { Money } from "@/lib/context/CurrencyContext";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -108,7 +109,7 @@ export const RecentOrdersTable = ({ orders }: RecentOrdersTableProps) => {
                         <StatusBadge status={order.status} />
                       </TableCell>
                       <TableCell className="text-right font-medium text-gray-800 font-mono text-xs sm:text-sm py-2.5">
-                        ${order.totalAmount.toFixed(2)}
+                        <Money value={order.totalAmount} />
                       </TableCell>
                     </TableRow>
                   ))}

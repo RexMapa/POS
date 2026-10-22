@@ -1,53 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
-import { dbConnect } from "@/lib/db/db";
-import Notification from "@/models/notification.model";
-import { getUserIdFromRequest } from "@/lib/auth";
+import { NextResponse } from 'next/server';
+import { withUser } from '@/lib/api';
 
-export async function GET(req: NextRequest) {
-  try {
-    await dbConnect();
-    const userId = await getUserIdFromRequest(req);
-
-    if (!userId) {
-      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-    }
-
-    const { searchParams } = new URL(req.url);
-    const unreadOnly = searchParams.get("unreadOnly") === "true";
-    const limit = Number(searchParams.get("limit")) || 20;
-
-    const notifications = await Notification.find({
-      userId,
-      ...(unreadOnly && { read: false }),
-    })
-      .sort({ createdAt: -1 })
-      .limit(limit);
-
-    return NextResponse.json({ notifications });
-  } catch (error: unknown) {
-    return NextResponse.json(
-      { message: "Error fetching Notifications from API: " + (error as Error).message },
-      { status: 500 }
-    );
-  }
-}
-
-export async function DELETE(req: NextRequest) {
-  try {
-    await dbConnect();
-    const userId = await getUserIdFromRequest(req);
-
-    if (!userId) {
-      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-    }
-
-    await Notification.deleteMany({ userId });
-
-    return NextResponse.json({ message: "All notifications cleared" });
-  } catch (error: unknown) {
-    return NextResponse.json(
-      { message: "Error clearing notifications: " + (error as Error).message },
-      { status: 500 }
-    );
-  }
-}
+import { boundedLimit } from '@/lib/api';
+export async function GET(req:Request) { return withUser(req,async(s,id)=>{const url=new URL(req.url);return NextResponse.json({notifications:await s.notifications(id,url.searchParams.get('unreadOnly')==='true',boundedLimit(url,20))});}); }
+export async function DELETE(req:Request) { return withUser(req,async(s,id)=>{await s.db.query('DELETE FROM qb_pos.notifications WHERE owner_id=$1',[id]);return NextResponse.json({message:'All notifications cleared'});}); }

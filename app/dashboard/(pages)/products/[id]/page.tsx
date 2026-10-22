@@ -1,4 +1,5 @@
 "use client";
+import { Money } from "@/lib/context/CurrencyContext";
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
@@ -369,14 +370,14 @@ const SingleProductPage = ({ params }: { params: Promise<{ id: string }> }) => {
               <div className="flex justify-between items-center">
                 <span className="text-sm text-gray-600">Cost Price</span>
                 <span className="text-lg font-semibold text-gray-900">
-                  ${product.costPrice.toFixed(2)}
+                  <Money value={product.costPrice} />
                 </span>
               </div>
 
               <div className="flex justify-between items-center">
                 <span className="text-sm text-gray-600">Selling Price</span>
                 <span className="text-lg font-semibold text-gray-900">
-                  ${product.sellPrice.toFixed(2)}
+                  <Money value={product.sellPrice} />
                 </span>
               </div>
 
@@ -384,7 +385,7 @@ const SingleProductPage = ({ params }: { params: Promise<{ id: string }> }) => {
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-gray-600">Profit per Unit</span>
                   <span className="text-lg font-semibold text-emerald-600">
-                    +${(product.sellPrice - product.costPrice).toFixed(2)}
+                    +<Money value={(product.sellPrice - product.costPrice)} />
                   </span>
                 </div>
 

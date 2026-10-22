@@ -1,36 +1,8 @@
-// lib/auth.ts
-import { jwtVerify } from "jose";
-
-export async function getUserIdFromRequest(req: Request): Promise<string> {
-  const cookieHeader = req.headers.get("cookie") || "";
-  const tokenCookie = cookieHeader
-    .split(";")
-    .map((c) => c.trim())
-    .find((c) => c.startsWith("token="));
-  const token = tokenCookie ? tokenCookie.split("=")[1] : null;
-  if (!token) throw new Error("No token provided");
-
-  const configuredSecret = process.env.JWT_SECRET?.trim();
-  if (!configuredSecret) throw new Error("Authentication is not configured. Set JWT_SECRET in the server environment.");
-  const secret = new TextEncoder().encode(configuredSecret);
-  try {
-    const { payload } = await jwtVerify(token, secret);
-    // token created with { id: user._id } earlier — adapt if you use sub
-    if (!payload || (!payload.id && !payload.sub))
-      throw new Error("Invalid token payload");
-    const userId = payload.id ?? payload.sub;
-
-    // Ensure we return a string
-    return String(userId);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (err: any) {
-    console.error("Token verification failed:", err.message);
-    if (err.name === "JWSSignatureVerificationFailed") {
-      throw new Error("Invalid token signature");
-    } else if (err.name === "JWTExpired") {
-      throw new Error("Token expired");
-    } else {
-      throw new Error("Unauthorized");
-    }
-  }
+import { AppError } from './errors';
+import { readSession } from './session';
+export async function getUserIdFromRequest(req:Request) {
+ const token=(req.headers.get('cookie')||'').split(';').map(c=>c.trim()).find(c=>c.startsWith('token='))?.slice(6);
+ if(!token) throw new AppError('Authentication required',401);
+ try { return await readSession(token); }
+ catch(error) { if(error instanceof AppError && error.status===503) throw error; throw new AppError('Your session has expired. Please sign in again.',401); }
 }

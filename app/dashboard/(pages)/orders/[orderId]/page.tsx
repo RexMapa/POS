@@ -1,4 +1,5 @@
 "use client";
+import { useCurrency } from "@/lib/context/CurrencyContext";
 
 import axios, { isAxiosError } from "axios";
 import { useParams, useRouter } from "next/navigation";
@@ -51,6 +52,7 @@ const statusOptions = [
 ];
 
 const SingleOrdersPage = () => {
+  const {currency}=useCurrency();
   const params = useParams();
   const router = useRouter();
   const orderId = Array.isArray(params.orderId)
@@ -194,7 +196,7 @@ const SingleOrdersPage = () => {
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
-      currency: "USD",
+      currency,
     }).format(amount);
   };
 

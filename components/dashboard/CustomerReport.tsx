@@ -1,4 +1,5 @@
 "use client";
+import { Money } from "@/lib/context/CurrencyContext";
 import { useState, useEffect, useCallback } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -166,7 +167,7 @@ export default function CustomerReport({ dateRange }: CustomerReportProps) {
             TOTAL REVENUE
           </div>
           <div className="text-2xl font-mono font-light mt-1">
-            ${data.summary.totalRevenue.toLocaleString()}
+            <Money value={data.summary.totalRevenue} />
           </div>
         </div>
         <div className="bg-white p-4 border border-gray-200 rounded-none">
@@ -235,7 +236,7 @@ export default function CustomerReport({ dateRange }: CustomerReportProps) {
                       {customer.totalOrders}
                     </TableCell>
                     <TableCell className="text-right">
-                      ${customer.totalSpent.toLocaleString()}
+                      <Money value={customer.totalSpent} />
                     </TableCell>
                     <TableCell className="text-right">
                       $
@@ -303,7 +304,7 @@ export default function CustomerReport({ dateRange }: CustomerReportProps) {
 
                 <div className="font-light">Total Spent</div>
                 <div className="font-mono font-light">
-                  ${customer.totalSpent.toLocaleString()}
+                  <Money value={customer.totalSpent} />
                 </div>
 
                 <div className="font-light">Avg Order Value</div>

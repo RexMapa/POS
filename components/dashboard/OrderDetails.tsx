@@ -1,4 +1,5 @@
 "use client";
+import { useCurrency } from "@/lib/context/CurrencyContext";
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -20,6 +21,7 @@ interface OrderItemsListProps {
 }
 
 export default function OrderItemsList({ items }: OrderItemsListProps) {
+  const {currency}=useCurrency();
   // Build a map of itemId -> resolved image URL (http/https/relative as-is, data URL converted to blob:)
   const [imageSrcMap, setImageSrcMap] = useState<Record<string, string>>({});
 
@@ -76,7 +78,7 @@ export default function OrderItemsList({ items }: OrderItemsListProps) {
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
-      currency: "USD",
+      currency,
     }).format(amount);
   };
 
