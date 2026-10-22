@@ -1,0 +1,34 @@
+"use client";
+import { useSuite } from './SuiteShell';
+import { screenTitles } from '@/lib/suite/navigation';
+import { Panel,Btn } from './Widgets';
+import { Dashboard,ReportsPage } from './Analytics';
+import { ProductPage,RecordsPage } from './RecordsPage';
+import { PointOfSale,SalesList } from './Sales';
+import { PurchaseForm,Purchases,AdjustmentPage,ReturnsPage } from './Purchases';
+import { SettingsPage,TeamPage,ProfilePage } from './Settings';
+export function SuitePage({screen=''}:{screen?:string}){
+ const {state,loading,error,refresh}=useSuite();const [title,description]=screenTitles[screen]||[screen==='profile'?'My Profile':'Page Not Found','Your Que Bros Perfumery workspace.'];
+ let body:React.ReactNode=null;
+ if(!screen)body=<Dashboard/>;
+ else if(screen==='inventory/products')body=<ProductPage/>;
+ else if(screen==='inventory/add-product')body=<ProductPage add/>;
+ else if(['inventory/categories','inventory/brands','inventory/units'].includes(screen))body=<RecordsPage kind={screen.split('/')[1]}/>;
+ else if(screen==='inventory/stock-adjustment')body=<AdjustmentPage/>;
+ else if(screen==='purchases/purchases')body=<Purchases/>;
+ else if(screen==='purchases/add-purchase')body=<PurchaseForm/>;
+ else if(screen==='purchases/purchase-returns')body=<ReturnsPage kind="purchase-returns"/>;
+ else if(screen==='sales/sales')body=<SalesList/>;
+ else if(screen==='sales/add-sale')body=<PointOfSale/>;
+ else if(screen==='sales/sales-returns')body=<ReturnsPage kind="sales-returns"/>;
+ else if(screen==='invoices/invoices')body=<SalesList invoices/>;
+ else if(['customers/customers','suppliers/suppliers','expenses/expenses'].includes(screen))body=<RecordsPage kind={screen.split('/')[0]}/>;
+ else if(screen.startsWith('reports/'))body=<ReportsPage kind={screen.split('/')[1]}/>;
+ else if(screen.startsWith('settings/'))body=<SettingsPage key={screen} group={screen.split('/')[1]}/>;
+ else if(screen==='users/users'||screen==='users/roles')body=<TeamPage roles={screen.endsWith('/roles')}/>;
+ else if(screen==='profile')body=<ProfilePage/>;
+ else body=<Panel><p>Choose a section from the Que Bros navigation.</p></Panel>;
+ const scope=screen.startsWith('inventory')?'inventory':screen.startsWith('purchases')||screen.startsWith('suppliers')?'purchases':screen.startsWith('sales')||screen.startsWith('invoices')?'sales':screen.startsWith('customers')?'customers':screen.startsWith('expenses')?'expenses':screen.startsWith('reports')?'reports':screen.startsWith('settings')||screen.startsWith('users')?'admin':null;
+ const allowed=!scope||state?.actor.isOwner||state?.actor.permissions[scope]?.includes('read')||(screen.endsWith('add-sale')&&state?.actor.permissions.sales?.includes('create'));
+ return <><div className="suite-page-head"><div><span className="suite-eyebrow">QUE BROS PERFUMERY / {screen?screen.split('/').join(' / '):'DASHBOARD'}</span><h1>{title}</h1><p>{description}</p></div><span className="suite-brand-seal">QUE BROS<br/><small>PERFUMERY</small></span></div>{error?<Panel title="Let’s reconnect your boutique"><p className="suite-error" role="alert">{error}</p><p className="suite-note">If this is your first deployment, check DATABASE_URL and the Neon role’s permission to create the qb_pos schema. Vercel logs contain a database error code for troubleshooting.</p><Btn onClick={refresh}>Try again</Btn></Panel>:loading?<div className="suite-loading" aria-live="polite">Preparing your boutique workspace…</div>:!allowed?<Panel title="Access is limited for your role"><p>Your boutique owner can adjust your permissions under Users → Roles & Permissions.</p></Panel>:body}</>;
+}

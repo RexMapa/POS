@@ -1,6 +1,6 @@
 # Upload to GitHub → host on Vercel → store data in Neon
 
-This is the complete PostgreSQL edition of the Que Bros POS. Use this folder in place of the earlier MongoDB edition. Keep all files and folders together at the root of the GitHub repository.
+This is version 2 of the Que Bros PostgreSQL POS with all 30 reference sections. Keep all files and folders together at the root of the GitHub repository. If you already deployed the earlier version, use UPGRADE-TO-V2.md. FEATURE-CHECKLIST.md maps every reference screen to the new workspace.
 
 ## 1. Get your Neon connection string
 
@@ -45,7 +45,7 @@ After the initial owner account is created, you may remove `ADMIN_PASSWORD` from
 
 ## Optional email registration
 
-Public registration is disabled by default. Each registered account owns a separate set of inventory and orders; this is not a shared staff-account system. To enable it, add `REGISTRATION_ENABLED=true`, `APP_URL=https://your-pos-domain`, and all `SMTP_*` and `EMAIL_FROM` settings from `.env.example`, then redeploy. Registration requires email verification; the owner account does not.
+Public registration is disabled by default. Add shared boutique staff under Users → All Users and assign a role under Roles & Permissions. Public self-registration, if enabled, creates an independent boutique owner rather than a staff account. To enable it, add `REGISTRATION_ENABLED=true`, `APP_URL=https://your-pos-domain`, and all `SMTP_*` and `EMAIL_FROM` settings from `.env.example`, then redeploy. Registration requires email verification; the owner and owner-created staff accounts do not.
 
 ## Common setup problems
 
@@ -65,6 +65,6 @@ The repository tests use an isolated embedded PostgreSQL engine. They cover inve
 
 ## Scope
 
-This is an online inventory and order-management POS. Payment terminal processing, receipt printer hardware, offline sales and automatic synchronization with the storefront are not included. Existing MongoDB records are not imported automatically. No real credentials or production records are bundled.
+This is an online inventory and order-management POS with purchasing, returns, invoices, CRM, expenses, staff permissions and reports. Payment terminal processing, cash-drawer hardware, offline sales and automatic synchronization with the storefront are not included. Existing MongoDB records are not imported automatically. No real credentials or production records are bundled. See FEATURE-CHECKLIST.md for details about warehouse labels, unit conversion metadata, catalog tax fields and optional integrations.
 
 References: [Neon connection guide](https://neon.com/docs/guides/node), [Vercel environment settings](https://vercel.com/docs/environment-variables/managing-environment-variables), [Vercel connection pooling](https://vercel.com/kb/guide/connection-pooling-with-functions).

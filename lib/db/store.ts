@@ -4,14 +4,16 @@ import type { Database } from './db';
 import { AppError } from '../errors';
 import { productInput, orderInput, businessInput, preferencesInput } from '../validation';
 
-type ProductRow = { id:string; owner_id:string; name:string; sku:string; description:string; category:string; quantity:number; reorder_level:number; cost_price:string; sell_price:string; unit:string; image:string; created_at:Date; updated_at:Date };
+type ProductRow = { id:string; owner_id:string; name:string; sku:string; description:string; category:string; quantity:number; reorder_level:number; cost_price:string; sell_price:string; unit:string; image:string; metadata?:Record<string,unknown>; created_at:Date; updated_at:Date };
 export type UserRow = { id:string; name:string; email:string; password:string; is_verified:boolean; preferences:z.infer<typeof preferencesInput>; verification_token:string|null; verification_expires:Date|null };
-type OrderRow = { id:string; owner_id:string; order_number:string; customer_name:string; customer_email:string; total_amount:string; status:'pending'|'completed'|'cancelled'; created_at:Date; updated_at:Date };
-type ItemRow = { id:string; order_id:string; product_id:string|null; product_key:string; name:string; image:string; quantity:number; price:string };
-const productView = (p:ProductRow) => ({_id:p.id,createdBy:p.owner_id,name:p.name,sku:p.sku,description:p.description,category:p.category,quantity:p.quantity,reorderLevel:p.reorder_level,costPrice:Number(p.cost_price),sellPrice:Number(p.sell_price),unit:p.unit,image:p.image,createdAt:p.created_at,updatedAt:p.updated_at});
-const orderView = (o:OrderRow, items:ItemRow[]) => ({_id:o.id,createdBy:o.owner_id,orderNumber:o.order_number,customerName:o.customer_name,customerEmail:o.customer_email,totalAmount:Number(o.total_amount),status:o.status,createdAt:o.created_at,updatedAt:o.updated_at,items:items.filter(i=>i.order_id===o.id).map(i=>({_id:i.id,product:{_id:i.product_key,name:i.name,image:i.image},name:i.name,quantity:i.quantity,price:Number(i.price)}))});
+type OrderRow = { id:string; owner_id:string; order_number:string; customer_name:string; customer_email:string; total_amount:string; metadata?:Record<string,unknown>&{paid?:number;subtotal?:number;invoiceNumber?:string}; status:'pending'|'completed'|'cancelled'; created_at:Date; updated_at:Date };
+type ItemRow = { id:string; order_id:string; product_id:string|null; product_key:string; name:string; image:string; quantity:number; price:string; cost_price?:string };
+const productView = (p:ProductRow) => ({...p.metadata,_id:p.id,createdBy:p.owner_id,name:p.name,sku:p.sku,description:p.description,category:p.category,quantity:p.quantity,reorderLevel:p.reorder_level,costPrice:Number(p.cost_price),sellPrice:Number(p.sell_price),unit:p.unit,image:p.image,createdAt:p.created_at,updatedAt:p.updated_at});
+const orderView = (o:OrderRow, items:ItemRow[]) => ({...o.metadata,_id:o.id,createdBy:o.owner_id,orderNumber:o.order_number,customerName:o.customer_name,customerEmail:o.customer_email,totalAmount:Number(o.total_amount),status:o.status,createdAt:o.created_at,updatedAt:o.updated_at,items:items.filter(i=>i.order_id===o.id).map(i=>({_id:i.id,product:{_id:i.product_key,name:i.name,image:i.image},name:i.name,quantity:i.quantity,price:Number(i.price),costPrice:Number(i.cost_price||0)}))});
 
 export class Store {
+ actorId?:string;
+ hideCosts=false;
  constructor(public db:Database) {}
  async user(id:string) { return (await this.db.query<UserRow>('SELECT * FROM qb_pos.users WHERE id=$1',[id]))[0]; }
  async userByEmail(email:string) { return (await this.db.query<UserRow>('SELECT * FROM qb_pos.users WHERE email=$1',[email.toLowerCase()]))[0]; }
@@ -22,7 +24,7 @@ export class Store {
  }
  async createProduct(owner:string,input:unknown) {
   const p=productInput.parse(input);
-  const row=(await this.db.query<ProductRow>(`INSERT INTO qb_pos.products(id,owner_id,name,sku,description,category,quantity,reorder_level,cost_price,sell_price,unit,image) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING *`,[randomUUID(),owner,p.name,p.sku,p.description,p.category,p.quantity,p.reorderLevel,p.costPrice.toFixed(2),p.sellPrice.toFixed(2),p.unit,p.image]))[0];
+  const row=(await this.db.query<ProductRow>(`INSERT INTO qb_pos.products(id,owner_id,name,sku,description,category,quantity,reorder_level,cost_price,sell_price,unit,image,metadata) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13::jsonb) RETURNING *`,[randomUUID(),owner,p.name,p.sku,p.description,p.category,p.quantity,p.reorderLevel,p.costPrice.toFixed(2),p.sellPrice.toFixed(2),p.unit,p.image,JSON.stringify({brand:p.brand,barcode:p.barcode,status:p.status,tax:p.tax,discount:p.discount,maximumStock:p.maximumStock,warehouse:p.warehouse})]))[0];
   return productView(row);
  }
  async updateProduct(owner:string,id:string,input:unknown) {
@@ -33,7 +35,7 @@ export class Store {
    const existing=(await tx.query<ProductRow>('SELECT * FROM qb_pos.products WHERE id=$1 AND owner_id=$2 FOR UPDATE',[id,owner]))[0];
    if(!existing) throw new AppError('Product not found',404);
    const p=productInput.parse({...productView(existing),...partial});
-   const row=(await tx.query<ProductRow>(`UPDATE qb_pos.products SET name=$3,sku=$4,description=$5,category=$6,quantity=$7,reorder_level=$8,cost_price=$9,sell_price=$10,unit=$11,image=$12,updated_at=now() WHERE id=$1 AND owner_id=$2 RETURNING *`,[id,owner,p.name,p.sku,p.description,p.category,p.quantity,p.reorderLevel,p.costPrice.toFixed(2),p.sellPrice.toFixed(2),p.unit,p.image]))[0];
+   const row=(await tx.query<ProductRow>(`UPDATE qb_pos.products SET name=$3,sku=$4,description=$5,category=$6,quantity=$7,reorder_level=$8,cost_price=$9,sell_price=$10,unit=$11,image=$12,metadata=$13::jsonb,updated_at=now() WHERE id=$1 AND owner_id=$2 RETURNING *`,[id,owner,p.name,p.sku,p.description,p.category,p.quantity,p.reorderLevel,p.costPrice.toFixed(2),p.sellPrice.toFixed(2),p.unit,p.image,JSON.stringify({brand:p.brand,barcode:p.barcode,status:p.status,tax:p.tax,discount:p.discount,maximumStock:p.maximumStock,warehouse:p.warehouse})]))[0];
    const service=new Store(tx);
    if(row.quantity===0 && existing.quantity!==0) await service.notify(owner,'out_of_stock','Out of stock',`${p.name} is out of stock`,{productName:p.name});
    else if(row.quantity<row.reorder_level && (row.quantity!==existing.quantity || row.reorder_level!==existing.reorder_level)) await service.notify(owner,'low_stock','Low stock',`${p.name}: ${row.quantity} remaining`,{productName:p.name,currentStock:row.quantity});
@@ -52,7 +54,7 @@ export class Store {
   const rows=await this.db.query<OrderRow>(`SELECT * FROM qb_pos.orders WHERE owner_id=$1 ${id?'AND id=$2':''} ORDER BY created_at DESC,id`,id?[owner,id]:[owner]);
   if(!rows.length) return [];
   const items=await this.db.query<ItemRow>('SELECT * FROM qb_pos.order_items WHERE order_id=ANY($1::text[]) ORDER BY id',[rows.map(r=>r.id)]);
-  return rows.map(o=>orderView(o,items));
+  return rows.map(o=>{const value=orderView(o,items);return this.hideCosts?{...value,costTotal:0,items:value.items.map(i=>({...i,costPrice:0}))}:value;});
  }
  async createOrder(owner:string,input:unknown) {
   const body=orderInput.parse(input);
@@ -64,6 +66,7 @@ export class Store {
    if(products.length!==quantities.size) throw new AppError('One or more products are unavailable',404);
    let cents=0;
    for(const p of products) {
+    if(p.metadata?.status==='inactive') throw new AppError(`${p.name} is inactive`,409);
     const qty=quantities.get(p.id)!;
     if(p.quantity<qty) throw new AppError(`Insufficient stock for ${p.name}. Only ${p.quantity} available.`,409);
     cents+=Math.round(Number(p.sell_price)*100)*qty;
@@ -75,14 +78,14 @@ export class Store {
    const service=new Store(tx);
    for(const p of products) {
     const qty=quantities.get(p.id)!;
-    items.push((await tx.query<ItemRow>(`INSERT INTO qb_pos.order_items(id,order_id,product_id,product_key,name,image,quantity,price) VALUES($1,$2,$3,$3,$4,$5,$6,$7) RETURNING *`,[randomUUID(),orderId,p.id,p.name,p.image,qty,p.sell_price]))[0]);
+    items.push((await tx.query<ItemRow>(`INSERT INTO qb_pos.order_items(id,order_id,product_id,product_key,name,image,quantity,price,cost_price) VALUES($1,$2,$3,$3,$4,$5,$6,$7,$8) RETURNING *`,[randomUUID(),orderId,p.id,p.name,p.image,qty,p.sell_price,p.cost_price]))[0]);
     await tx.query('UPDATE qb_pos.products SET quantity=quantity-$2,updated_at=now() WHERE id=$1',[p.id,qty]);
     const left=p.quantity-qty;
     if(left===0) await service.notify(owner,'out_of_stock','Out of stock',`${p.name} is out of stock`,{productName:p.name});
     else if(left<p.reorder_level) await service.notify(owner,'low_stock','Low stock',`${p.name}: ${left} remaining`,{productName:p.name,currentStock:left});
    }
    await service.notify(owner,'new_order','New order',`Order from ${body.customerName}`,{customerName:body.customerName,amount:cents/100});
-   return orderView(row,items);
+   const value=orderView(row,items);return this.hideCosts?{...value,costTotal:0,items:value.items.map(i=>({...i,costPrice:0}))}:value;
   });
  }
  async updateOrder(owner:string,id:string,status:'pending'|'completed'|'cancelled') {
@@ -91,6 +94,8 @@ export class Store {
    if(!row) throw new AppError('Order not found',404);
    if(row.status==='cancelled' && status!=='cancelled') throw new AppError('A cancelled order cannot be reopened. Create a new sale.',409);
    if(status==='cancelled' && row.status!=='cancelled') {
+    const returns=await tx.query("SELECT id FROM qb_pos.records WHERE owner_id=$1 AND kind='sales-returns' AND data->>'sourceId'=$2 AND data->>'status'='approved'",[owner,id]);
+    if(returns.length)throw new AppError('This sale has approved returns and cannot be cancelled.',409);
     const items=await tx.query<ItemRow>('SELECT * FROM qb_pos.order_items WHERE order_id=$1 ORDER BY product_id',[id]);
     for(const i of items) if(i.product_id) await tx.query('UPDATE qb_pos.products SET quantity=quantity+$2,updated_at=now() WHERE id=$1 AND owner_id=$3',[i.product_id,i.quantity,owner]);
    }

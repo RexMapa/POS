@@ -1,14 +1,13 @@
-# Verification
+# Verification — Que Bros POS v2
 
-Completed checks for this package:
+- Production Next.js build, TypeScript and ESLint checks.
+- 37 passing PostgreSQL/configuration tests, including three parent test groups.
+- Browser checks of all 30 reference screens against a real local production server using the pg driver and an isolated embedded PostgreSQL server. No API mocking was used.
 
-- Production Next.js build with no database credentials present.
-- TypeScript and ESLint checks.
-- 21 passing PostgreSQL/configuration tests, including the two parent test groups.
-- A local production server connected through the real `pg` driver to an isolated embedded PostgreSQL server. No API mocking was used in this check.
+The browser check covered owner bootstrap/sign-in, creating a product through its form, creating a category through its form, receiving a purchase, stock adjustment, completing a POS checkout through its product grid/cart, invoice display, supplier and customer return records, saved settings after reload, all report pages, theme switching, mobile layouts and navigation, and staff authorization. Restricted staff were denied administrative changes and report endpoints; product costs were hidden from the cashier workspace.
 
-The running-app check verified automatic schema creation and owner bootstrap, browser sign-in, saved product creation and partial edits, order creation from database prices, insufficient-stock rejection, order completion, cancellation and one-time stock restoration, sales/customer reports, dashboard numbers, PHP formatting, product and order detail navigation, mobile overflow, logout and protected-page redirects.
+PostgreSQL tests additionally cover owner isolation, catalog dependencies, partial product edits, duplicate SKU handling, stock validation, duplicate order lines, transaction rollback, one-time receiving, return quantity limits and approval, one-time cancellation/restocking, payment overrun rejection, cost snapshots, settings validation, staff password hashing/suspension, role edits and audit records.
 
-Unit/integration coverage also includes owner isolation, duplicate SKU checks, duplicate order-line handling, transaction rollback after a later write fails, search wildcard escaping, notification preferences, business settings, preserved order snapshots after a product is deleted, password hashing, tampered sessions and invalid configuration.
+Test data and passwords exist only in isolated local checks; no sample data is seeded into a deployed boutique. Preview images show test records. The live Neon database, GitHub repository, Vercel deployment, SMTP delivery and physical hardware were not accessed or tested.
 
-Your real Neon connection, GitHub repository, Vercel deployment and optional SMTP provider were not accessed. Set your own deployment environment values using START-HERE.md. Local test accounts and records are not included in this package.
+See START-HERE.md for deployment, UPGRADE-TO-V2.md for existing installations and FEATURE-CHECKLIST.md for the full operational scope.

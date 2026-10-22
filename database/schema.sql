@@ -44,3 +44,29 @@ CREATE TABLE IF NOT EXISTS qb_pos.notifications (
  metadata jsonb NOT NULL DEFAULT '{}', created_at timestamptz NOT NULL DEFAULT now());
 
 CREATE INDEX IF NOT EXISTS notifications_owner_created ON qb_pos.notifications(owner_id,created_at DESC);
+
+ALTER TABLE qb_pos.products ADD COLUMN IF NOT EXISTS metadata jsonb NOT NULL DEFAULT '{}';
+
+ALTER TABLE qb_pos.orders ADD COLUMN IF NOT EXISTS metadata jsonb NOT NULL DEFAULT '{}';
+
+ALTER TABLE qb_pos.order_items ADD COLUMN IF NOT EXISTS cost_price numeric(14,2) NOT NULL DEFAULT 0;
+
+CREATE TABLE IF NOT EXISTS qb_pos.records (
+ id text PRIMARY KEY,owner_id text NOT NULL REFERENCES qb_pos.users(id),kind text NOT NULL,data jsonb NOT NULL,
+ created_at timestamptz NOT NULL DEFAULT now(),updated_at timestamptz NOT NULL DEFAULT now());
+
+CREATE INDEX IF NOT EXISTS records_owner_kind ON qb_pos.records(owner_id,kind,created_at DESC);
+
+CREATE UNIQUE INDEX IF NOT EXISTS records_catalog_name ON qb_pos.records(owner_id,kind,lower(data->>'name')) WHERE kind IN ('categories','brands','units');
+
+CREATE UNIQUE INDEX IF NOT EXISTS records_unit_symbol ON qb_pos.records(owner_id,lower(data->>'symbol')) WHERE kind='units';
+
+CREATE TABLE IF NOT EXISTS qb_pos.memberships (
+ user_id text PRIMARY KEY REFERENCES qb_pos.users(id),owner_id text NOT NULL REFERENCES qb_pos.users(id),
+ role_id text NOT NULL,warehouse text NOT NULL DEFAULT 'Que Bros Boutique',active boolean NOT NULL DEFAULT true,last_login timestamptz);
+
+CREATE TABLE IF NOT EXISTS qb_pos.audit (
+ id text PRIMARY KEY,owner_id text NOT NULL REFERENCES qb_pos.users(id),actor_id text NOT NULL,
+ action text NOT NULL,resource text NOT NULL,details jsonb NOT NULL DEFAULT '{}',created_at timestamptz NOT NULL DEFAULT now());
+
+CREATE INDEX IF NOT EXISTS audit_owner_created ON qb_pos.audit(owner_id,created_at DESC);

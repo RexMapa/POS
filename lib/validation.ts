@@ -9,6 +9,9 @@ export const productInput = z.object({
  quantity:z.coerce.number().int().min(0).max(100000000).default(0), reorderLevel:z.coerce.number().int().min(0).max(100000000).default(0),
  costPrice:z.coerce.number().min(0).max(999999999).default(0), sellPrice:z.coerce.number().min(0).max(999999999).default(0),
  unit:z.string().trim().min(1).max(30).default('pcs'),
+ brand:z.string().trim().max(120).default(''),barcode:z.string().trim().max(120).default(''),
+ status:z.enum(['active','inactive']).default('active'),tax:z.coerce.number().min(0).max(100).default(0),
+ discount:z.coerce.number().min(0).max(100).default(0),maximumStock:z.coerce.number().int().min(0).max(100000000).default(0),warehouse:z.string().trim().max(120).default('Que Bros Boutique'),
  image:z.string().max(2000000).default('').refine(v=>!v || v.startsWith('/') || v.startsWith('https://') || /^data:image\/(png|jpe?g|webp|gif);base64,/.test(v), 'Use an HTTPS image URL or an image upload.'),
 });
 export const orderInput = z.object({ customerName:z.string().trim().min(1).max(120), customerEmail:email,

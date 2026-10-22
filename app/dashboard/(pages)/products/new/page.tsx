@@ -1,12 +1,2 @@
-import React from "react";
-import { AddProductForm } from "@/components/dashboard/AddProductForm";
-
-const NewProduct = () => {
-  return (
-    <div className="w-full">
-      <AddProductForm />
-    </div>
-  );
-};
-
-export default NewProduct;
+import {redirect} from 'next/navigation';
+export default function LegacyPage(){redirect('/dashboard/inventory/add-product');}
