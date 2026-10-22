@@ -150,7 +150,7 @@ export default function ProductReport({ dateRange }: ProductReportProps) {
   return (
     <div className="space-y-4">
       <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-        <div className="bg-gradient-to-br from-[#cc4400] via-[#ff6b00] to-[#ff8533] p-4 border border-gray-200 rounded-none">
+        <div className="bg-gradient-to-br from-[#1E1E1E] via-[#A86F00] to-[#FFAE00] p-4 border border-gray-200 rounded-none">
           <div className="text-xs font-light tracking-wider text-white/90">
             TOTAL PRODUCTS
           </div>

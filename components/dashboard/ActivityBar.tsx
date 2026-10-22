@@ -167,7 +167,7 @@ export function ActivityBar({
   };
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-30 border-b border-gray-200 bg-neutral-100 shadow-sm w-full">
+    <div className="qb-topbar fixed top-0 left-0 right-0 z-30 w-full">
       <div className="flex h-14 items-center justify-between px-4">
         {/* Left Section - Menu + Logo + Title */}
         <div className="flex items-center gap-4">
@@ -175,7 +175,7 @@ export function ActivityBar({
             variant="ghost"
             size="icon"
             onClick={onSidebarToggle}
-            className="h-8 w-8 rounded-sm hover:bg-orange-50 border border-soft-gray"
+            className="h-8 w-8 rounded-sm hover:bg-amber-50 border border-soft-gray"
             aria-label="Toggle sidebar"
           >
             <Menu className="h-4 w-4 text-gray-700" />
@@ -184,18 +184,18 @@ export function ActivityBar({
           <div className="hidden lg:flex items-center gap-2">
             <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/40">
               <Image
-                src="/invenza-icon.png"
-                alt="Invenza"
+                src="/qb-monogram.svg"
+                alt="Que Bros Perfumery"
                 width={20}
                 height={20}
                 className="h-5 w-5"
               />
             </div>
-            <span className="font-mono text-sm font-bold text-black">
-              INVENZA
+            <span className="qb-wordmark text-black">
+              QUE BROS
             </span>
             <span className="hidden font-mono text-xs text-gray-500 sm:block">
-              Dashboard
+              Boutique POS
             </span>
           </div>
         </div>
@@ -208,14 +208,14 @@ export function ActivityBar({
               <Calendar className="h-3.5 w-3.5 mr-1.5 text-gray-500" />
               {format(new Date(), "MMM d")}
             </div>
-            <Button onClick={handleAddOrder} size="default" variant="outline">
+            <Button onClick={handleAddOrder} size="default" variant="secondary" aria-label="New sale">
               <ClipboardList className="h-3.5 w-3.5" />
-              <span className="hidden sm:inline ml-1.5">Add New Order</span>
+              <span className="hidden sm:inline ml-1.5">New sale</span>
             </Button>
           </div>
 
           {/* Add Product Button - package icon provides clear visual cue */}
-          <Button onClick={handleAddProduct} size="default">
+          <Button onClick={handleAddProduct} size="default" variant="outline" aria-label="Add product">
             <Package className="h-3.5 w-3.5" />
             <span className="hidden sm:inline ml-1.5">Add Product</span>
           </Button>

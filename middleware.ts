@@ -4,12 +4,19 @@ import { jwtVerify } from "jose";
 
 export async function middleware(request: NextRequest) {
   const token = request.cookies.get("token")?.value;
+  const configuredSecret = process.env.JWT_SECRET?.trim();
+  if (!configuredSecret) {
+    if (request.nextUrl.pathname.startsWith("/dashboard")) {
+      return NextResponse.redirect(new URL("/auth/signin", request.url));
+    }
+    return NextResponse.next();
+  }
 
   // Handle "/" → auto-redirect if logged in
   if (request.nextUrl.pathname === "/") {
     if (token) {
       try {
-        const secret = new TextEncoder().encode(process.env.JWT_SECRET!);
+        const secret = new TextEncoder().encode(configuredSecret);
         await jwtVerify(token, secret);
         // Valid token → go to dashboard
         return NextResponse.redirect(new URL("/dashboard", request.url));
@@ -27,7 +34,7 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(new URL("/auth/signin", request.url));
     }
     try {
-      const secret = new TextEncoder().encode(process.env.JWT_SECRET!);
+      const secret = new TextEncoder().encode(configuredSecret);
       await jwtVerify(token, secret);
       return NextResponse.next();
     } catch {

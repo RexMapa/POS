@@ -1,4 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Boldonse&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -13,37 +12,37 @@ body {
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  --color-background: var(--bg-light-base);
-  --color-foreground: var(--bg-black);
-  --color-card: var(--bg-light-base);
-  --color-card-foreground: var(--bg-black);
-  --color-popover: var(--bg-light-base);
-  --color-popover-foreground: var(--bg-black);
-  --color-primary: var(--bg-primary);
-  --color-primary-foreground: var(--bg-light-base);
-  --color-secondary: var(--bg-soft-gray);
-  --color-secondary-foreground: var(--bg-black);
-  --color-muted: var(--bg-soft-gray);
-  --color-muted-foreground: var(--bg-muted-orange);
-  --color-accent: var(--bg-hover-accent);
-  --color-accent-foreground: var(--bg-light-base);
+  --color-background: var(--light-base);
+  --color-foreground: var(--black);
+  --color-card: var(--light-base);
+  --color-card-foreground: var(--black);
+  --color-popover: var(--light-base);
+  --color-popover-foreground: var(--black);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--black);
+  --color-secondary: var(--soft-gray);
+  --color-secondary-foreground: var(--black);
+  --color-muted: var(--soft-gray);
+  --color-muted-foreground: var(--muted-orange);
+  --color-accent: var(--hover-accent);
+  --color-accent-foreground: var(--light-base);
   --color-destructive: #ef4444;
-  --color-border: var(--bg-soft-gray);
-  --color-input: var(--bg-soft-gray);
-  --color-ring: var(--bg-primary);
+  --color-border: var(--soft-gray);
+  --color-input: var(--soft-gray);
+  --color-ring: var(--primary);
   --color-chart-1: #3b82f6;
   --color-chart-2: #10b981;
   --color-chart-3: #f59e0b;
   --color-chart-4: #8b5cf6;
   --color-chart-5: #ec4899;
-  --color-sidebar: var(--bg-light-base);
-  --color-sidebar-foreground: var(--bg-black);
-  --color-sidebar-primary: var(--bg-primary);
-  --color-sidebar-primary-foreground: var(--bg-light-base);
-  --color-sidebar-accent: var(--bg-hover-accent);
-  --color-sidebar-accent-foreground: var(--bg-light-base);
-  --color-sidebar-border: var(--bg-soft-gray);
-  --color-sidebar-ring: var(--bg-primary);
+  --color-sidebar: var(--light-base);
+  --color-sidebar-foreground: var(--black);
+  --color-sidebar-primary: var(--primary);
+  --color-sidebar-primary-foreground: var(--light-base);
+  --color-sidebar-accent: var(--hover-accent);
+  --color-sidebar-accent-foreground: var(--light-base);
+  --color-sidebar-border: var(--soft-gray);
+  --color-sidebar-ring: var(--primary);
 
   /* Custom Colors for Invenza */
   --color-primary: var(--primary);
@@ -60,37 +59,37 @@ body {
 :root {
   --radius: 0.625rem;
   /* Using your custom colors throughout */
-  --background: var(--bg-light-base);
-  --foreground: var(--bg-black);
-  --card: var(--bg-light-base);
-  --card-foreground: var(--bg-black);
-  --popover: var(--bg-light-base);
-  --popover-foreground: var(--bg-black);
-  --primary: var(--bg-primary);
-  --primary-foreground: var(--bg-light-base);
-  --secondary: var(--bg-soft-gray);
-  --secondary-foreground: var(--bg-black);
-  --muted: var(--bg-soft-gray);
-  --muted-foreground: var(--bg-muted-orange);
-  --accent: var(--bg-hover-accent);
-  --accent-foreground: var(--bg-light-base);
+  --background: var(--light-base);
+  --foreground: var(--black);
+  --card: var(--light-base);
+  --card-foreground: var(--black);
+  --popover: var(--light-base);
+  --popover-foreground: var(--black);
+  --primary: #ffae00;
+  --primary-foreground: var(--light-base);
+  --secondary: var(--soft-gray);
+  --secondary-foreground: var(--black);
+  --muted: var(--soft-gray);
+  --muted-foreground: var(--muted-orange);
+  --accent: var(--hover-accent);
+  --accent-foreground: var(--light-base);
   --destructive: #ef4444; /* Keeping a standard destructive color */
-  --border: var(--bg-soft-gray);
-  --input: var(--bg-soft-gray);
-  --ring: var(--bg-primary);
+  --border: var(--soft-gray);
+  --input: var(--soft-gray);
+  --ring: var(--primary);
   --chart-1: #3b82f6; /* Blue */
   --chart-2: #10b981; /* Green */
   --chart-3: #f59e0b; /* Amber */
   --chart-4: #8b5cf6; /* Violet */
   --chart-5: #ec4899; /* Pink */
-  --sidebar: var(--bg-light-base);
-  --sidebar-foreground: var(--bg-black);
-  --sidebar-primary: var(--bg-primary);
-  --sidebar-primary-foreground: var(--bg-light-base);
-  --sidebar-accent: var(--bg-hover-accent);
-  --sidebar-accent-foreground: var(--bg-light-base);
-  --sidebar-border: var(--bg-soft-gray);
-  --sidebar-ring: var(--bg-primary);
+  --sidebar: var(--light-base);
+  --sidebar-foreground: var(--black);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--light-base);
+  --sidebar-accent: var(--hover-accent);
+  --sidebar-accent-foreground: var(--light-base);
+  --sidebar-border: var(--soft-gray);
+  --sidebar-ring: var(--primary);
   /* Invenza Colors */
   --primary: #ff6b00;
   --dark-base: #121212;
@@ -103,37 +102,37 @@ body {
 
 .dark {
   /* Dark mode using your custom colors */
-  --background: var(--bg-dark-base);
-  --foreground: var(--bg-light-base);
-  --card: var(--bg-black);
-  --card-foreground: var(--bg-light-base);
-  --popover: var(--bg-black);
-  --popover-foreground: var(--bg-light-base);
-  --primary: var(--bg-primary);
-  --primary-foreground: var(--bg-light-base);
-  --secondary: var(--bg-black);
-  --secondary-foreground: var(--bg-light-base);
-  --muted: var(--bg-black);
-  --muted-foreground: var(--bg-muted-orange);
-  --accent: var(--bg-muted-orange);
-  --accent-foreground: var(--bg-light-base);
+  --background: var(--dark-base);
+  --foreground: var(--light-base);
+  --card: var(--black);
+  --card-foreground: var(--light-base);
+  --popover: var(--black);
+  --popover-foreground: var(--light-base);
+  --primary: #ffae00;
+  --primary-foreground: var(--light-base);
+  --secondary: var(--black);
+  --secondary-foreground: var(--light-base);
+  --muted: var(--black);
+  --muted-foreground: var(--muted-orange);
+  --accent: var(--muted-orange);
+  --accent-foreground: var(--light-base);
   --destructive: #dc2626; /* Darker red for dark mode */
-  --border: var(--bg-black);
-  --input: var(--bg-black);
-  --ring: var(--bg-primary);
+  --border: var(--black);
+  --input: var(--black);
+  --ring: var(--primary);
   --chart-1: #60a5fa; /* Lighter blue */
   --chart-2: #34d399; /* Lighter green */
   --chart-3: #fbbf24; /* Lighter amber */
   --chart-4: #a78bfa; /* Lighter violet */
   --chart-5: #f472b6; /* Lighter pink */
-  --sidebar: var(--bg-black);
-  --sidebar-foreground: var(--bg-light-base);
-  --sidebar-primary: var(--bg-primary);
-  --sidebar-primary-foreground: var(--bg-light-base);
-  --sidebar-accent: var(--bg-muted-orange);
-  --sidebar-accent-foreground: var(--bg-light-base);
-  --sidebar-border: var(--bg-black);
-  --sidebar-ring: var(--bg-primary);
+  --sidebar: var(--black);
+  --sidebar-foreground: var(--light-base);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--light-base);
+  --sidebar-accent: var(--muted-orange);
+  --sidebar-accent-foreground: var(--light-base);
+  --sidebar-border: var(--black);
+  --sidebar-ring: var(--primary);
 }
 
 @layer base {
@@ -152,7 +151,7 @@ body {
 }
 
 .bg-invenza-primary {
-  background-color: var(--bg-primary);
+  background-color: var(--primary);
 }
 
 /* Product image loading */
@@ -214,3 +213,63 @@ body {
 .status-badge-cancelled {
   @apply bg-rose-100/40 text-rose-900/80 dark:bg-rose-500/15 dark:text-rose-100/90;
 }
+
+/* Que Bros boutique design: the same cream, charcoal and gold as the storefront. */
+:root {
+  --font-sans: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'Segoe UI', Arial, sans-serif;
+  --primary: #ffae00; --dark-base: #1e1e1e; --light-base: #fff7ef;
+  --soft-gray: #e9dfd3; --hover-accent: #a86f00; --muted-orange: #736453;
+  --black: #1e1e1e; --radius: 1rem;
+}
+body { background: #fff7ef; color: #1e1e1e; font-size: 14px; line-height: 1.6; }
+h1, h2, h3 { font-family: Georgia, 'Times New Roman', serif; font-weight: 400; letter-spacing: -.025em; }
+.font-mono, .font-sans { font-family: var(--font-sans); letter-spacing: normal; }
+.bg-white { background-color: #fffdf9; }
+.bg-gray-50, .bg-neutral-50, .bg-neutral-100 { background-color: #fff7ef; }
+.border-gray-200 { border-color: #e9dfd3; }
+input, textarea, select { accent-color: #a86f00; }
+input:focus-visible, textarea:focus-visible { outline: 2px solid #a86f00; outline-offset: 3px; }
+[data-slot="card"] { border-radius: 18px; box-shadow: 0 6px 24px #3c2a0d06; }
+[data-slot="table-head"] { text-transform: uppercase; letter-spacing: .1em; font-size: 10px; color: #736453; }
+[data-slot="table-row"] { border-color: #e9dfd3; }
+.qb-topbar { background: #fffaf4eF; backdrop-filter: blur(18px); border-bottom: 1px solid #e9dfd3; box-shadow: none; }
+.qb-wordmark { font-family: Georgia, serif; font-size: 18px; letter-spacing: .05em; }
+.qb-workspace { min-width: 0; }
+.qb-workspace > main { max-width: 1680px; width: 100%; margin-left: auto; margin-right: auto; }
+.qb-page-intro { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px; margin: 10px 8px 30px; }
+.qb-eyebrow { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .23em; color: #a86f00; }
+.qb-page-intro h1 { font-size: clamp(30px, 4vw, 44px); line-height: 1.2; margin: 8px 0; }
+.qb-page-intro p { color: #736453; max-width: 540px; }
+.qb-error { padding: 40px; background: #fffdf9; border: 1px solid #e9dfd3; border-radius: 20px; }
+.qb-entry { min-height:100vh; display:grid; grid-template-columns: 1.05fr 1fr; }
+.qb-story { background: #1e1e1e; color: #fff7ef; padding: clamp(30px,6vw,90px); display:flex; flex-direction:column; justify-content:space-between; position:relative; overflow:hidden; }
+.qb-story::after { content:''; width:420px; height:420px; border:1px solid #ffae0029; border-radius:50%; position:absolute; right:-200px; top:28%; box-shadow:0 0 0 60px #ffae0005,0 0 0 120px #ffae0004; pointer-events:none; }
+.qb-story h1 { font-size:clamp(42px,5vw,74px); line-height:1.12; max-width:540px; margin:24px 0; }
+.qb-story em { color:#ffd36b; }
+.qb-story p { color:#d3c7b9; max-width:380px; }
+.qb-story footer { font-size:10px; letter-spacing:.18em; color:#d3c7b9; text-transform:uppercase; margin-top:50px; }
+.qb-entry-panel { padding:50px clamp(24px,5vw,80px); display:flex; flex-direction:column; justify-content:center; }
+.qb-entry-panel > div { width:100%; max-width:440px; margin:auto; }
+.qb-entry-panel h2 { font-size:38px; margin:12px 0; }
+.qb-entry-panel p { color:#736453; }
+.qb-features { display:grid; gap:16px; margin:32px 0; }
+.qb-feature { padding:20px 0; border-bottom:1px solid #e9dfd3; display:flex; gap:18px; }
+.qb-feature > span { color:#a86f00; font-size:11px; letter-spacing:.1em; padding-top:3px; }
+.qb-feature h3 { font-size:22px; margin-bottom:3px; }
+@media(min-width:1100px) { .qb-desktop-nav { display:flex; } }
+@media(max-width:767px) { .qb-entry { grid-template-columns:1fr; } .qb-story { min-height:360px; } .qb-story h1 { font-size:44px; } .qb-entry-panel { padding:36px 24px; } .qb-page-intro { margin: 6px 0 24px; } }
+@media(prefers-reduced-motion:reduce) { *,*::before,*::after { animation-duration:.01ms !important; transition-duration:.01ms !important; scroll-behavior:auto !important; } }
+.qb-rail { display:none; width:224px; position:fixed; inset:0 auto 0 0; z-index:40; background:#1e1e1e; color:#fff7ef; padding:30px 18px; flex-direction:column; }
+.qb-rail-logo { display:flex; justify-content:center; padding-bottom:28px; border-bottom:1px solid #ffffff17; }
+.qb-rail-caption { color:#bfb1a1; text-transform:uppercase; font-size:9px; letter-spacing:.2em; padding:27px 14px 14px; }
+.qb-rail nav { display:grid; gap:6px; }
+.qb-rail nav a { display:flex; align-items:center; gap:13px; padding:13px 15px; font-size:12px; color:#d3c7b9; border-radius:9px; transition:background .2s,color .2s; }
+.qb-rail nav a:hover { background:#ffffff0b; color:#fff7ef; }
+.qb-rail nav a.is-active { background:#ffae00; color:#1e1e1e; font-weight:600; }
+.qb-nav-dot { width:5px; height:5px; border-radius:50%; background:currentColor; margin-left:auto; }
+.qb-rail-footer { margin-top:auto; padding:24px 14px 0; border-top:1px solid #ffffff17; }
+.qb-rail-footer .qb-eyebrow { font-size:8px; color:#ffd36b; }
+.qb-rail-footer p { font-family:Georgia,serif; font-size:23px; line-height:1.5; margin:14px 0 22px; }
+.qb-rail-footer a { display:flex; align-items:center; justify-content:space-between; font-size:11px; color:#ffd36b; }
+@media(min-width:1100px) { .qb-rail { display:flex; } .qb-workspace { margin-left:224px; } .qb-topbar { left:224px; width:calc(100% - 224px); } }

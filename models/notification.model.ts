@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Document } from "mongoose";
 
 export type NotificationType = "low_stock" | "new_order" | "out_of_stock";
 
@@ -8,7 +8,7 @@ export interface INotification extends Document {
   title: string;
   message: string;
   read: boolean;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
   createdAt: Date;
 }
 

@@ -1,41 +1,11 @@
 import type { Metadata } from "next";
-import { Play, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 
-const play = Play({
-  subsets: ["latin"],
-  variable: "--font-sans",
-  weight: ["400", "700"],
-});
-
-const geistMono = Geist_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-});
-
 export const metadata: Metadata = {
-  title: "Invenza - Inventory & Order Management",
-  description: "The Ultimate Inventory Management and Order Tracking App",
+  title: "Que Bros Perfumery | Boutique POS",
+  description: "The Que Bros Perfumery workspace for products, orders, customers and boutique operations.",
 };
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <>
-      <html lang="en" className={`${play.variable} ${geistMono.variable} h-full`}>
-        <head>
-          <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-        </head>
-        <body className="antialiased bg-neutral-50 overflow-x-hidden">
-          {children}
-          <Toaster />
-        </body>
-      </html>
-    </>
-  );
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  return <html lang="en"><body className="antialiased overflow-x-hidden">{children}<Toaster toastOptions={{style:{background:'#1e1e1e',color:'#fff7ef',border:'1px solid #a86f00',borderRadius:'14px'}}}/></body></html>;
 }

@@ -88,7 +88,7 @@ export default function BusinessSection() {
       {/* Header Section */}
       <div className="flex items-center justify-between mb-4 md:mb-6 pb-4 border-b border-gray-200">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 md:w-10 md:h-10 bg-orange-50 flex items-center justify-center rounded-none">
+          <div className="w-8 h-8 md:w-10 md:h-10 bg-amber-50 flex items-center justify-center rounded-none">
             <Building2 className="w-4 h-4 md:w-5 md:h-5 text-orange-500" />
           </div>
           <div>
@@ -118,7 +118,7 @@ export default function BusinessSection() {
         {!isEditing && !data.exists ? (
           // Empty state - no business details yet
           <div className="text-center py-8 md:py-10">
-            <div className="mx-auto w-12 h-12 md:w-16 md:h-16 bg-orange-50 flex items-center justify-center rounded-none mb-4 md:mb-6">
+            <div className="mx-auto w-12 h-12 md:w-16 md:h-16 bg-amber-50 flex items-center justify-center rounded-none mb-4 md:mb-6">
               <Building2 className="w-6 h-6 md:w-8 md:h-8 text-orange-500" />
             </div>
             <h3 className="font-medium text-base md:text-lg mb-3">
@@ -204,7 +204,7 @@ export default function BusinessSection() {
         ) : (
           // Edit mode
           <div className="space-y-4 md:space-y-6">
-            <div className="bg-orange-50 rounded-none p-3 md:p-5">
+            <div className="bg-amber-50 rounded-none p-3 md:p-5">
               <div className="flex items-center gap-3">
                 <Building2 className="w-4 h-4 md:w-5 md:h-5 text-orange-500" />
                 <h3 className="font-medium text-base md:text-lg">

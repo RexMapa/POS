@@ -296,7 +296,7 @@ const AddOrderForm = () => {
               <Button
                 onClick={addItemToOrder}
                 disabled={!selectedProductId || quantity <= 0}
-                className="w-full bg-orange-500 font-mono text-xs font-medium text-white hover:bg-orange-600 disabled:opacity-50"
+                className="w-full bg-amber-500 font-mono text-xs font-medium text-white hover:bg-orange-600 disabled:opacity-50"
               >
                 <Plus className="mr-2 h-4 w-4" />
                 Add to Order
@@ -400,7 +400,7 @@ const AddOrderForm = () => {
             !customerEmail ||
             orderItems.length === 0
           }
-          className="flex-1 bg-orange-500 font-mono text-xs font-medium text-white hover:bg-orange-600 disabled:opacity-50"
+          className="flex-1 bg-amber-500 font-mono text-xs font-medium text-white hover:bg-orange-600 disabled:opacity-50"
         >
           {isSubmitting ? "Creating Order..." : "Create Order"}
         </Button>

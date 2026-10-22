@@ -151,7 +151,7 @@ const ProductCard = ({
                                 isOutOfStock
                   ? "bg-red-500"
                   : isLowStock
-                  ? "bg-orange-500"
+                  ? "bg-amber-500"
                   : "bg-emerald-500"
               }`}
             ></div>

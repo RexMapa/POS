@@ -125,7 +125,7 @@ export default function NotificationsDropdown() {
                       toast.dismiss(t.id);
                     }}
                   >
-                    <div className="p-1.5 rounded bg-[#ff6b00]/10">
+                    <div className="p-1.5 rounded bg-[#A86F00]/10">
                       {getNotificationIcon(latestNotification.type)}
                     </div>
                     <div>
@@ -179,7 +179,7 @@ export default function NotificationsDropdown() {
         <Button variant="ghost" size="icon" className="relative">
           <Bell className="h-5 w-5" />
           {unreadCount > 0 && (
-            <span className="absolute -top-1 -right-1 bg-[#ff6b00] text-white rounded-full text-xs w-4 h-4 flex items-center justify-center font-light">
+            <span className="absolute -top-1 -right-1 bg-[#A86F00] text-white rounded-full text-xs w-4 h-4 flex items-center justify-center font-light">
               {unreadCount}
             </span>
           )}
@@ -231,7 +231,7 @@ export default function NotificationsDropdown() {
               <div className="flex items-start gap-3">
                 <div
                   className={`p-1.5 rounded ${
-                    n.read ? "bg-orange-50" : "bg-[#ff6b00]/10"
+                    n.read ? "bg-amber-50" : "bg-[#A86F00]/10"
                   }`}
                 >
                   {iconMap[n.type]}

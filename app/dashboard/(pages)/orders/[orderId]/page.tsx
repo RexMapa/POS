@@ -370,13 +370,13 @@ const SingleOrdersPage = () => {
                   </Badge>
                 </div>
 
-                <div className="flex items-center justify-between p-4 bg-orange-50 rounded-lg border border-orange-100">
+                <div className="flex items-center justify-between p-4 bg-amber-50 rounded-lg border border-orange-100">
                   <span className="text-sm font-medium text-slate-600">
                     New Status
                   </span>
                   <Badge
                     variant="outline"
-                    className="bg-orange-100 border-orange-200 text-orange-700 font-medium"
+                    className="bg-orange-100 border-amber-200 text-orange-700 font-medium"
                   >
                     {selectedStatus}
                   </Badge>
@@ -404,7 +404,7 @@ const SingleOrdersPage = () => {
               <Button
                 onClick={confirmStatusUpdate}
                 disabled={isUpdating}
-                className="flex-1 py-2.5 bg-orange-500 hover:bg-orange-600 text-white font-medium shadow-sm hover:shadow-md transition-all duration-200"
+                className="flex-1 py-2.5 bg-amber-500 hover:bg-orange-600 text-white font-medium shadow-sm hover:shadow-md transition-all duration-200"
               >
                 {isUpdating ? (
                   <>

@@ -34,18 +34,23 @@ interface DashboardStats {
 export default function DashboardPage() {
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState("");
 
   useEffect(() => {
     fetchDashboardStats();
   }, []);
 
   const fetchDashboardStats = async () => {
+    setLoading(true);
+    setLoadError("");
     try {
       const response = await fetch("/api/dashboard/stats");
       const data = await response.json();
+      if (!response.ok) throw new Error("Unable to load boutique data. Check your database configuration and sign-in session, then try again.");
       setStats(data);
     } catch (error) {
-      console.error("Error fetching dashboard stats:", error);
+      setStats(null);
+      setLoadError(error instanceof Error ? error.message : "Unable to load boutique data.");
     } finally {
       setLoading(false);
     }
@@ -82,7 +87,7 @@ export default function DashboardPage() {
       <div className="p-6">
         <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
         <div className="text-center py-12">
-          <p className="text-muted-foreground">Failed to load dashboard data</p>
+          <p className="text-muted-foreground">{loadError || "Unable to load boutique data."}</p><button onClick={fetchDashboardStats} className="mt-4 px-6 py-2 rounded-full border border-[#d9cbbb]">Try again</button>
         </div>
       </div>
     );
@@ -97,7 +102,7 @@ export default function DashboardPage() {
           value={`$${stats.totalRevenue.toFixed(2)}`}
           icon={<TrendingUp className="w-4 h-4" />}
           description="All time revenue"
-          className="border border-gray-200 bg-gradient-to-br from-[#cc4400] via-[#ff6b00] to-[#ff8533] rounded-md text-white xl:col-span-1"
+          className="border border-gray-200 bg-gradient-to-br from-[#1E1E1E] via-[#29251e] to-[#40331e] rounded-md text-white xl:col-span-1"
           iconBgColor="bg-white/20"
           iconColor="text-white"
         />

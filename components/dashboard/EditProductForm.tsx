@@ -569,7 +569,7 @@ export function EditProductForm({
           <Button
             type="submit"
             disabled={!isDirty || isSubmitting}
-            className="flex-1 bg-orange-500 font-mono text-xs font-medium text-white hover:bg-orange-600 disabled:opacity-50"
+            className="flex-1 bg-amber-500 font-mono text-xs font-medium text-white hover:bg-orange-600 disabled:opacity-50"
           >
             {isSubmitting ? "Updating Product..." : "Update Product"}
           </Button>

@@ -218,7 +218,7 @@ const SingleProductPage = ({ params }: { params: Promise<{ id: string }> }) => {
           <p
             className={
               stockStatus?.label === "Out of Stock"
-                ? "text-orange-600"
+                ? "text-amber-800"
                 : stockStatus?.label === "Low Stock"
                 ? "text-yellow-600"
                 : "hidden"

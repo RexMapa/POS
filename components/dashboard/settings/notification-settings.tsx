@@ -228,7 +228,7 @@ const NotificationSettings = () => {
       {/* Header Section */}
       <div className="flex items-center justify-between mb-4 md:mb-6 pb-4 border-b border-gray-200">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 md:w-10 md:h-10 bg-orange-50 flex items-center justify-center rounded-none">
+          <div className="w-8 h-8 md:w-10 md:h-10 bg-amber-50 flex items-center justify-center rounded-none">
             <Bell className="w-4 h-4 md:w-5 md:h-5 text-orange-500" />
           </div>
           <div>
@@ -247,8 +247,8 @@ const NotificationSettings = () => {
         </div>
 
         {hasChanges && (
-          <div className="flex items-center gap-2 text-xs font-mono text-orange-600 bg-orange-50 px-2 md:px-3 py-1.5 rounded-none">
-            <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></div>
+          <div className="flex items-center gap-2 text-xs font-mono text-amber-800 bg-amber-50 px-2 md:px-3 py-1.5 rounded-none">
+            <div className="w-2 h-2 bg-amber-500 rounded-full animate-pulse"></div>
             Unsaved changes
           </div>
         )}

@@ -123,7 +123,7 @@ export function DateRangePicker({ onDateChange }: DateRangePickerProps) {
                   variant="ghost"
                   size="sm"
                   onClick={clearSelection}
-                  className="text-xs font-light hover:bg-orange-50 hover:text-orange-600"
+                  className="text-xs font-light hover:bg-amber-50 hover:text-amber-800"
                 >
                   Clear
                 </Button>

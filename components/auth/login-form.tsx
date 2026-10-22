@@ -106,6 +106,8 @@ export default function LoginForm() {
           id="email"
           name="email"
           type="email"
+          aria-label="Email address"
+          autoComplete="email"
           placeholder="Email Address"
           value={formData.email}
           onChange={handleChange}
@@ -134,6 +136,8 @@ export default function LoginForm() {
           id="password"
           name="password"
           type="password"
+          aria-label="Password"
+          autoComplete="current-password"
           placeholder="Password"
           value={formData.password}
           onChange={handleChange}

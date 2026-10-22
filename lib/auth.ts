@@ -10,7 +10,9 @@ export async function getUserIdFromRequest(req: Request): Promise<string> {
   const token = tokenCookie ? tokenCookie.split("=")[1] : null;
   if (!token) throw new Error("No token provided");
 
-  const secret = new TextEncoder().encode(process.env.JWT_SECRET!);
+  const configuredSecret = process.env.JWT_SECRET?.trim();
+  if (!configuredSecret) throw new Error("Authentication is not configured. Set JWT_SECRET in the server environment.");
+  const secret = new TextEncoder().encode(configuredSecret);
   try {
     const { payload } = await jwtVerify(token, secret);
     // token created with { id: user._id } earlier — adapt if you use sub

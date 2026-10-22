@@ -7,7 +7,7 @@ export const getVerificationEmailTemplate = (
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verify Your Invenza Account</title>
+    <title>Verify Your Que Bros Perfumery Account</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Boldonse&display=swap');
         body {
@@ -56,13 +56,13 @@ export const getVerificationEmailTemplate = (
             font-size: 16px;
             font-weight: bold;
             color: #ffffff;
-            background-color: #ff6b00;
+            background-color: #A86F00;
             text-decoration: none;
             border-radius: 0.5rem;
             transition: background-color 0.2s;
         }
         .button:hover {
-            background-color: #ff8c42;
+            background-color: #FFD36B;
         }
         .footer {
             background-color: #f9fafb;
@@ -76,15 +76,15 @@ export const getVerificationEmailTemplate = (
 <body>
     <div class="container">
         <div class="header">
-            <img src="https://i.imgur.com/3Y0a0v3.png" alt="Invenza Logo">
+            <img src="https://i.imgur.com/3Y0a0v3.png" alt="Que Bros Perfumery Logo">
         </div>
         <div class="content">
             <h1>Almost there, ${name}!</h1>
-            <p>Welcome to Invenza! To get started, please verify your email address by clicking the button below. This link will expire in one hour.</p>
+            <p>Welcome to Que Bros Perfumery! To get started, please verify your email address by clicking the button below. This link will expire in one hour.</p>
             <a href="${verificationLink}" class="button">Verify My Account</a>
         </div>
         <div class="footer">
-            <p>&copy; 2024 Invenza. All rights reserved.</p>
+            <p>&copy; 2024 Que Bros Perfumery. All rights reserved.</p>
             <p>If you did not sign up for this account, you can safely ignore this email.</p>
         </div>
     </div>

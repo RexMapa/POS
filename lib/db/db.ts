@@ -1,43 +1,36 @@
 import mongoose from "mongoose";
 
-const MONGODB_URI = process.env.MONGODB_URI!;
-if (!MONGODB_URI) throw new Error("Please define the MONGODB_URI environment variable");
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-let cached = (global as any).mongoose;
-if (!cached) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  cached = (global as any).mongoose = { conn: null, promise: null };
-}
+type ConnectionCache = {
+  conn: typeof mongoose | null;
+  promise: Promise<typeof mongoose> | null;
+};
+const globalWithMongoose = globalThis as typeof globalThis & { mongoose?: ConnectionCache };
+const cached = globalWithMongoose.mongoose ??= { conn: null, promise: null };
 
 export async function dbConnect() {
+  // Validate only when a request needs the database, never during route imports.
+  const uri = process.env.MONGODB_URI?.trim();
+  if (!uri) {
+    throw new Error("Database is not configured. Set MONGODB_URI in .env.local or your hosting environment, then restart or redeploy.");
+  }
+  if (!/^mongodb(\+srv)?:\/\//.test(uri)) {
+    throw new Error("MONGODB_URI must start with mongodb:// or mongodb+srv://.");
+  }
   if (cached.conn) return cached.conn;
-  
   if (!cached.promise) {
-    const opts = {
+    cached.promise = mongoose.connect(uri, {
       bufferCommands: false,
       maxPoolSize: 10,
       serverSelectionTimeoutMS: 5000,
       socketTimeoutMS: 45000,
-    };
-    
-    cached.promise = mongoose.connect(MONGODB_URI, opts)
-      .then((mongoose) => {
-        console.log("Connected to MongoDB: ", MONGODB_URI);
-        return mongoose;
-      })
-      .catch((error) => {
-        console.error("Error connecting to MongoDB:", error);
-        throw error;
-      });
+    });
   }
-  
   try {
     cached.conn = await cached.promise;
-  } catch (e) {
+    return cached.conn;
+  } catch (error) {
+    // A failed attempt must not poison subsequent requests. Never log the URI.
     cached.promise = null;
-    throw e;
+    throw error;
   }
-  
-  return cached.conn;
 }

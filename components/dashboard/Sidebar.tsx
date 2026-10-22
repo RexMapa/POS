@@ -117,8 +117,8 @@ export function DashboardSidebar({
               <div className="flex items-center gap-3">
                 <div className="flex h-8 w-8 items-center justify-center bg-primary/10 rounded-none">
                   <Image
-                    src="/invenza-icon.png"
-                    alt="Invenza"
+                    src="/qb-monogram.svg"
+                    alt="Que Bros Perfumery"
                     width={20}
                     height={20}
                     className="h-5 w-5"
@@ -126,7 +126,7 @@ export function DashboardSidebar({
                 </div>
                 <div className="flex flex-col">
                   <span className="text-xs font-light text-black tracking-wider">
-                    INVENZA
+                    QUE BROS
                   </span>
                   <span className="text-[10px] text-gray-500 font-light">
                     Dashboard
@@ -156,7 +156,7 @@ export function DashboardSidebar({
                               flex w-full items-center justify-between px-3 py-2 text-left text-xs font-light transition-all duration-150 cursor-pointer border border-transparent rounded-none
                               ${
                                 isActive
-                                  ? "bg-orange-50 text-[#ff6b00] border-orange-200"
+                                  ? "bg-amber-50 text-[#A86F00] border-amber-200"
                                   : "text-black hover:bg-gray-50 hover:border-gray-200"
                               }
                             `}
@@ -164,14 +164,14 @@ export function DashboardSidebar({
                             <div className="flex items-center gap-3">
                               <item.icon
                                 className={`h-4 w-4 ${
-                                  isActive ? "text-[#ff6b00]" : "text-gray-500"
+                                  isActive ? "text-[#A86F00]" : "text-gray-500"
                                 }`}
                               />
                               <span className="tracking-wide">{item.title}</span>
                             </div>
                             <ChevronDown
                               className={`h-4 w-4 transition-transform duration-150 ${
-                                isActive ? "text-[#ff6b00]" : "text-gray-500"
+                                isActive ? "text-[#A86F00]" : "text-gray-500"
                               } group-data-[state=open]/collapsible:rotate-180`}
                             />
                           </button>
@@ -189,7 +189,7 @@ export function DashboardSidebar({
                                     flex items-center gap-3 px-3 py-1.5 text-xs font-light transition-all duration-150 border border-transparent rounded-none
                                     ${
                                       isSubActive
-                                        ? "bg-orange-50 text-[#ff6b00] border-orange-200"
+                                        ? "bg-amber-50 text-[#A86F00] border-amber-200"
                                         : "text-black hover:bg-gray-50 hover:border-gray-200"
                                     }
                                   `}
@@ -197,7 +197,7 @@ export function DashboardSidebar({
                                   <subItem.icon
                                     className={`h-4 w-4 ${
                                       isSubActive
-                                        ? "text-[#ff6b00]"
+                                        ? "text-[#A86F00]"
                                         : "text-gray-500"
                                     }`}
                                   />
@@ -221,14 +221,14 @@ export function DashboardSidebar({
                         flex items-center gap-3 px-3 py-2 text-xs font-light transition-all duration-150 border border-transparent rounded-none
                         ${
                           isActive
-                            ? "bg-orange-50 text-[#ff6b00] border-orange-200"
+                            ? "bg-amber-50 text-[#A86F00] border-amber-200"
                             : "text-black hover:bg-gray-50 hover:border-gray-200"
                         }
                       `}
                     >
                       <item.icon
                         className={`h-4 w-4 ${
-                          isActive ? "text-[#ff6b00]" : "text-gray-500"
+                          isActive ? "text-[#A86F00]" : "text-gray-500"
                         }`}
                       />
                       <span className="tracking-wide">{item.title}</span>
@@ -240,7 +240,7 @@ export function DashboardSidebar({
 
             {/* Close Button */}
             <div className="border-t border-gray-200 p-3">
-              <SheetClose className="flex items-center justify-center w-full h-10 hover:bg-gray-50 cursor-pointer border border-gray-200 hover:border-orange-200 transition-all duration-150 rounded-none">
+              <SheetClose className="flex items-center justify-center w-full h-10 hover:bg-gray-50 cursor-pointer border border-gray-200 hover:border-amber-200 transition-all duration-150 rounded-none">
                 <PanelRightOpen className="h-4 w-4 text-gray-500" />
                 <span className="ml-2 text-xs text-black font-light tracking-wide">Close</span>
               </SheetClose>

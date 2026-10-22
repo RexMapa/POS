@@ -9,8 +9,8 @@ export default function RegisterPage() {
         <div className="mb-8 text-center">
           <Link href="/" className="inline-block">
             <Image
-              src="/invenza-white.png"
-              alt="Invenza Logo"
+              src="/qb-logo-dark.png"
+              alt="Que Bros Perfumery Logo"
               width={150}
               height={50}
               priority
@@ -20,7 +20,7 @@ export default function RegisterPage() {
             Create Your Account
           </h1>
           <p className="mt-2 text-lg text-gray-600">
-            Join Invenza and streamline your inventory management.
+            Join Que Bros Perfumery and streamline your inventory management.
           </p>
         </div>
         <RegisterForm />
